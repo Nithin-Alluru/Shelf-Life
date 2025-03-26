@@ -53,7 +53,7 @@ def get_book(work_id):
         book = {
             'title': title,
             'author': author,
-            'work_ID': work_id,
+            'work_id': work_id,
             'description': description,
             'img_S': cover_url_S,
             'img_M': cover_url_M,

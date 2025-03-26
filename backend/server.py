@@ -14,6 +14,8 @@ CORS(app)  # Allow frontend to communicate with backend
 def home():
 	return jsonify({"message": "Flask API is running"}), 200
 
+## is this required anywhere? I think it was used for initial setup but no longer
+## called by frontend
 @app.route('/parse', methods=['POST'])
 def parse_book():
     try:
@@ -239,21 +241,26 @@ def return_review_data(work_ID):
 
     # default return value for no reviews
     if len(reviews) == 0:
-        return ([dict(avg_rating=-1)] + [{}])
-
-    # Get average review score
-    query2 = """
+        avg = -1
+    else:
+        # Get average review score
+        query2 = """
         SELECT ROUND(AVG(star_rating), 1) FROM reviews
         WHERE reviews.work_id = ?
-    """
+        """
+        cursor = conn.execute(query2, (work_ID,))
+        singleRow = cursor.fetchone()
+        avg = [dict(avg_rating=singleRow[0])]
 
-    cursor = conn.execute(query2, (work_ID,))
-    singleRow = cursor.fetchone()
-    avg = [dict(avg_rating=singleRow[0])]
-    result = jsonify(avg + reviews)
+
+    reviews_data = {
+            'work_id': work_ID, 
+            'avg_rating': avg, 
+            'reviews_list': reviews
+    }
     conn.close()
 
-    return result
+    return jsonify(reviews_data)
 
 
 # GET all reviews associated with a user

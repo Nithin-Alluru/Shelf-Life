@@ -11,6 +11,12 @@ export interface BookItem {
     reading_Time?: number;
 }
 
+export interface Reviews {
+    work_id: string;
+    avg_rating: string;
+    reviews_list: Review[];
+}
+
 export interface Review {
     review_id: string;
     work_id: string;
@@ -21,6 +27,17 @@ export interface Review {
 }
 
 
+//for creating reviews
+export interface ReviewForm {
+    rating: number, 
+    reviewText: string, 
+    liked: boolean
+}
+//getting status back from post request
+export interface ReviewStatus {
+    success: boolean, 
+    review: Review
+}
 
 export const categories : string[] = [
     "Fiction", 

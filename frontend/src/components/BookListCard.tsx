@@ -1,15 +1,14 @@
 import { BookItem } from "../types";
 import { Link } from "react-router-dom";
-
-import '../assets/css/CategoryBookBox.css'
+import '../assets/css/BookListCard.css'
 import '../assets/css/global.css'
-import { useEffect } from "react";
+import { useEffect } from "react"; // used for testing
 
 
-function CategoryBookBox(props:BookItem) {
-    const preview = props.description.slice(0, 150);
+function BookListCard(props:BookItem) {
+    const preview = props.description.slice(0, 150); //shorten description to fit into book container
 
-    useEffect (() => console.log(props) )
+    useEffect (() => console.log(props))
 
 
     return(
@@ -26,11 +25,10 @@ function CategoryBookBox(props:BookItem) {
                         </Link>
                         <h4>by <Link id="author-link" to={`${props.author}`}>{props.author}</Link></h4>
                     </div>
-                    <p>{preview} ...<Link id="description-link" to={`/books/${props.work_id}`}>See more</Link></p>
+                    <p>{preview} ...<Link id="description-link" to={`/books/${props.work_id}`} state={props}>See more</Link></p>
                 </div>
         </div>
     );
-
 }
 
-export default CategoryBookBox;
+export default BookListCard;

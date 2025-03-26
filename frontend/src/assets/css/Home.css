@@ -2,11 +2,12 @@
 div#home-container-top {
     background-color: var(--light-primary-color);
     color: var(--secondary-font-color);
-    height: 30vh;
+    height: 29vh;
     width: 95vw;
     text-align-last: center;
     align-content: center;
     padding-top: 1em;
+    margin-top: 1vh;
 }
 
 div#home-container-top h1 {
@@ -43,6 +44,7 @@ div#site-description-container {
     border-radius: 8px;
     width: max-content;
     height:max-content;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
 }
 
 div#site-description-container h3 {
@@ -54,6 +56,7 @@ div#example-review-container-background{
     background-color: var(--main-color);
     border-radius: 8px;
     padding: 1%;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
 }
 
 div#example-review-container {
@@ -128,8 +131,6 @@ h5#username{
     width: max-content;
     float: left;
 }
-
-
 
 
 /*Call to action styling */

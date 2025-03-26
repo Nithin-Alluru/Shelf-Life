@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BookItem, Review } from "../types";
-import StarRating from "./StarRating";
+import StarRating from "./StarStaticRating";
 import '../assets/css/ReviewCard.css'
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 function ReviewCard(review:Review) {
-    return(
+    return( // ADD LIKED TODO
     <div className='container review'>
         <div id='review-content-top'>
             <div>

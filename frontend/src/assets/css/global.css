@@ -55,7 +55,6 @@ button {
     border-radius: 8px;
     border: thin solid var(--light-primary-color);
     color: var(--default-font-color);
-    box-shadow:rgb(from color r g b);
 }
 
 button:hover {
@@ -65,10 +64,12 @@ button:hover {
 
 button.primary {
     background-color: var(--main-color);
+    box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.4);
 }
 
 button.secondary {
     background-color: var(--light-accent-color);
+    box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.4);
 }
 
 /* creates an inverted button on hover */
@@ -102,6 +103,17 @@ main {
     justify-content: space-around;
 }
 
+button#back-button {
+    background-color: transparent;
+    border:none;
+    font-weight: bold;
+    color: var(--default-font-color);
+}
+
+button#back-button:hover {
+    color: var(--light-accent-color);
+    text-decoration: underline;
+}
 /* For large text sizes, you typically want to decrease your line height. */
 h1,
 h2,

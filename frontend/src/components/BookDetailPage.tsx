@@ -1,37 +1,51 @@
 import '../assets/css/BookPage.css';
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import BookDetailBox from "./BookDetailBox";
-import { BookItem } from "../types";
+import { BookItem, Reviews } from "../types";
 import ReviewCard from './ReviewCard';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLessThan } from '@fortawesome/free-solid-svg-icons';
+import { Review } from '../types';
+import { getReviews } from '../utils/fetch';
+import BookDetailCard from './BookDetailCard';
 
 function BookDetailPage() {
-    const {workID} = useParams();
-    const [loading, setLoading] = useState(true); // Add loading state
-    const [error, setError] = useState(null); // Handle errors gracefully
-    const [book, setBook] = useState<BookItem | null>(null);
-    useEffect(() => {
-        axios.get('https://openlibrary.org/works/OL45804W.json')
-            .then((response) => setBook(response.data))
-            .catch(console.error);
-    }, []);
-    console.log(book);
+    const book:BookItem = useLocation().state; // gets book data passed in url
+    const navigate = useNavigate();
+    // get list of reviews that have been written for this book
+    const {reviewData, loading, error} = getReviews(`http://127.0.0.1:5000/books/${book.work_id}/reviews`);
 
-
-    const review = {
-        reviewId: "1235342",
-        username: "test",
-        work_ID: "12342",
-        rating: 3,
-        reviewText: "best ever",
-        liked: true,
-    }
-
-    return (<main>
-        {book ? (<BookDetailBox title={book.title} author={book.author} work_id={book.work_id} description={book.description} img_S={book.img_S} img_M={book.img_M} img_L={book.img_L} reading_Time={0}/>) : (!loading && !error && <p>No books found.</p>)}
-        <ReviewCard review_id={review.reviewId} work_id={workID} username={review.username} rating={review.rating} reviewText={review.reviewText} liked={review.liked}/>
-
+    return (
+    <main>
+        <div>
+            <button id="back-button" onClick={() => navigate(-1)}><FontAwesomeIcon icon={faLessThan} size={'xs'}/> Back</button>
+            {book ? (
+                <BookDetailCard book={book} 
+                    avgRating={(reviewData != undefined && reviewData.avg_rating != '-1') ? reviewData.avg_rating : 'n/a'} />
+                        ) : (!loading && !error && <p>Error loading book data. Please try again later. </p>)}
+        </div>
+        <div>
+            <h3>Reviews</h3>
+            {loading && <p>Loading reviews...</p>} {/* Show loading state */}
+            {error && <p style={{ color: "var(--error-color)" }}>{error}</p>} {/* Show error message */}  
+            <ul id="review-list">
+                {reviewData != undefined && reviewData.reviews_list.length > 0 ? (
+                    reviewData.reviews_list.map((review: Review) => (
+                        <ReviewCard
+                            review_id={review.review_id}
+                            work_id={review.work_id}
+                            username={review.username}
+                            rating={review.rating}
+                            reviewText={review.reviewText}
+                            liked={review.liked}
+                        />
+                    ))
+                ) : (
+                    !loading && !error && <p>No reviews have been written for this title yet.</p>
+                                    )}
+            </ul>
+        </div>
     </main>);
 }
 export default BookDetailPage;

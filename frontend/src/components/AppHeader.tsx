@@ -11,7 +11,7 @@ function AppHeader() {
                 <img src={AppLogo} alt="Logo"/>
             </Link>
             <div className='header-content'>
-                <SearchBar />  {/* Search bar component */}
+                <SearchBar />  
                 <NavBar />
                 <button className='primary' onClick={() => nav("login")}>Sign In</button>
                 <button className='secondary' onClick={() => nav("register")}>Register</button>
