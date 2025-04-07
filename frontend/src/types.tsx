@@ -46,3 +46,7 @@ export const categories : string[] = [
 export interface ContextProps {
     children: JSX.Element | JSX.Element[]
   }
+
+export interface Works {
+    works_list: string[]
+}
