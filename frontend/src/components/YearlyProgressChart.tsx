@@ -36,7 +36,7 @@ function YearlyProgressChart({props}:{props:number[]}) {
 
     return(
         <div>
-            <canvas ref={chartRef} style={{width:'20vh', height:'20vh'}}/>
+            <canvas ref={chartRef} style={{width:'15vh', height:'15vh'}}/>
         </div>
 
     );

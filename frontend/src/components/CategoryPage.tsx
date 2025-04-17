@@ -5,6 +5,7 @@ import BookListCard from "./BookListCard";
 import { useNavigate, useParams } from "react-router-dom";
 import CategoryNav from "./CategoryNav";
 import CompStatus from "./CompStatus";
+import '../assets/css/BookListPage.css'
 
 
 
@@ -70,7 +71,7 @@ function CategoryPage() {
                 {loading ? (<p>Loading books... </p>) 
                 : (error) ? (<p style={{ color: "red" }}>{error}</p>)
                 :  (
-                    <ul id="book-list">
+                    <ul id="book-list-page">
                                     {books && books.length > 0 ? (
                                         books.map((book: BookItem) => (
                                             <BookListCard

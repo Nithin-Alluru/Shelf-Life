@@ -6,7 +6,9 @@ import { User } from "../types";
 
 function UserNetwork({initialState, followers, following }:{initialState: string, followers:User[], following: User[]}) {
     const [selected, setSelected] = useState(initialState);
-    console.log(followers)
+    console.log
+    console.log("followers" , followers)
+    console.log("following" , following)
 
 
 
@@ -17,16 +19,7 @@ function UserNetwork({initialState, followers, following }:{initialState: string
                 <li id={(selected == 'Following')? "selected" : "unselected"} onClick={() => setSelected('Following')}>Following</li>
             </ul>
             <div>
-                {(selected == 'Followers') ?
-                <ul>
-                    {followers.length > 0 ? 
-                    followers.map((user: User) => (
-                        <li><Link to={`/${user.username}/profile`}><FontAwesomeIcon icon={faUserCircle}/>{user.username}</Link></li>
-                    ))
-                    : <p>You have no followers.</p>
-                    } 
-                </ul>
-                : (selected == 'Following') ?
+                {(selected == 'Following') ?
                 <ul>
                 {following.length > 0 ? 
                 following.map((user: User) => (
@@ -34,7 +27,17 @@ function UserNetwork({initialState, followers, following }:{initialState: string
                 ))
                 : <p>You are not following anyone.</p>
                 } 
-            </ul>
+            </ul> :
+               (selected == 'Followers') ?
+                <ul>
+                    {followers.length > 0 ? 
+                    followers.map((user: User) => (
+                        <li key={user.username}><Link to={`/${user.username}/profile`}><FontAwesomeIcon icon={faUserCircle}/>{user.username}</Link></li>
+                    ))
+                    : <p>You have no followers.</p>
+                    } 
+                </ul>
+                
                 : <></> }
             </div>
 

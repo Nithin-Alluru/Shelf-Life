@@ -1,0 +1,35 @@
+div.competition-item {
+    background-color: var(--light-primary-color);
+    height: fit-content;
+    color: var(--secondary-font-color);
+    margin: 1em;
+    padding:1em;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20vw;
+
+}
+
+div.competition-item a {
+    color: var(--light-accent-color)
+}
+
+div.contest-info {
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-color: grey;
+    padding-bottom: 0.5em;
+}
+main#competitions-list div#header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1em;
+}
+
+button.primary.create-comp {
+    width: max-content;
+    margin-top: 1em;
+}

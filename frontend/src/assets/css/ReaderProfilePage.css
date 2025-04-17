@@ -27,6 +27,7 @@ div#profile-header-content {
     width: 70%;
     padding: 1rem;
     margin-bottom: 3%;
+    align-items: center;
 
 }
 
@@ -64,15 +65,16 @@ div#profile-body-content {
 }
 
 li#selected {
-    color: rgb(186, 122, 251);
+    color: #6c63ff;
     font-weight: bold;
     border-bottom-style: solid;
-    border-color: rgb(186, 122, 251);
+    border-color: #6c63ff;
 }
 
 li#selected:hover, li#unselected:hover {
     cursor: pointer;
-    color: rgb(186, 122, 251);
+    color:#6c63ff;
+    text-decoration: none;;
 }
 
 
@@ -93,4 +95,12 @@ div#profile-nav ul {
 div.stats:hover {
     color: red;
     cursor: pointer;
+}
+
+div#reader-goals {
+    display: flex;
+    max-height: 30vh;
+    align-items: center;
+    justify-content: space-evenly;
+
 }

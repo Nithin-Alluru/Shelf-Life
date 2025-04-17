@@ -12,13 +12,13 @@ function CompStatus() {
 
     return(
         <div id="comp-status-container">
-            <div id="close">
                 <p># Books: {compList.length} / 10</p>
-                <FontAwesomeIcon icon={faX} onClick={() => {
-                    sessionStorage.removeItem("creatingComp");
-                    nav('/competitions');
-                }}/>
-            </div>
+                <div id='cancel-icon'>
+                        <FontAwesomeIcon id="cancel" icon={faX} onClick={() => {
+                        sessionStorage.removeItem("creatingComp");
+                        nav('/competitions');
+                    }}/>
+                </div>
             
             <p color="red"><FontAwesomeIcon icon={faPen}/> Edit</p>  
             <Link to={'/competitions/create'} color="red">Edit</Link>

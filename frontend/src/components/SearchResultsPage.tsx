@@ -11,7 +11,6 @@ import CompetitionCard from "./CompetitionCard";
 function SearchResultsPage() {
     const searchQueries: CategoryItem[] = [
             {query: "q", title: "Books"}, 
-            {query: "author", title: "Authors"},
             {query: "reviews", title: "Reviews"},
             {query: "accounts", title: "Accounts"},
             {query: "contests", title: "Competitions"}
@@ -29,6 +28,7 @@ function SearchResultsPage() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    
 
  
 
@@ -69,7 +69,7 @@ function SearchResultsPage() {
         </ul>
       </div>
             <div>
-                {loading ? (<p>Loading books... </p>) 
+                {loading ? (<p>Loading... </p>) 
                 : (error) ? (<p style={{ color: "red" }}>{error}</p>)
                 : (
                 <ul id='search-results-list'>
@@ -109,10 +109,9 @@ function SearchResultsPage() {
                         users && users.length > 0 ? (
                             users.map((user: User) => (
                                 <UserCard 
-                                username={user.username} 
-                                first_name={user.first_name} 
-                                last_name={user.last_name} 
-                                />
+                                    username={user.username}
+                                    first_name={user.first_name}
+                                    last_name={user.last_name} goal={user.goal}                                />
                             ))
                         ) : (!loading && !error && <p>No users found.</p>)
                     ) 
@@ -122,7 +121,7 @@ function SearchResultsPage() {
                                 <CompetitionCard/>
                             ))
                         ) : (
-                            !loading && !error && <p>No books found.</p>
+                            !loading && !error && <p>No competitions found.</p>
                                             )
                     )
                     :

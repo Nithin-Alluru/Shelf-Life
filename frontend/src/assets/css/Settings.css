@@ -1,0 +1,43 @@
+div#settings-container {
+    background-color: var(--light-primary-color);
+    color: var(--secondary-font-color);
+    width: 30vw;
+    padding: 1em;
+    display: flex;;
+    flex-direction: column;
+    align-items: center;
+}
+
+button.delete {
+    background-color: var(--error-color);
+    border-style: solid;
+    border-width: thin;
+    border-color: var(--secondary-font-color);
+}
+button.delete:hover {
+    background-color: red;
+}
+
+div#settings-container div#user-data {
+    width: max-content;
+}
+div#user h3, div#user h2{
+    display: inline;
+
+}
+div#settings-container div#user {
+    padding: 1em 0;
+}
+
+div#settings-container h2 {
+    border-bottom: solid;
+    border-width: thin;
+    border-color: grey;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+div#confirmation-buttons {
+    width: fit-content
+}

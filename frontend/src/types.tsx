@@ -79,9 +79,33 @@ export class CompetitionBookListItem {
       this.work_id = book.work_id
       this.book = book
     }
-  }
+}
 
 export interface ShelfItem {
     shelf_name: string, 
     books_list: BookItem[]
+}
+
+export interface ShelfName {
+    shelf_name: string
+}
+
+// need to be returned a list of these
+export interface ContestItem {
+    contest_name: string, 
+    book_count: number, 
+    end_date: string, 
+    organizer: string
+}
+
+
+export interface ContestBookItem {
+    constest_name: string, 
+    work_id: string
+}
+
+
+export interface ContestParticipant {
+    username: string, 
+    completed_books: BookItem[]
 }

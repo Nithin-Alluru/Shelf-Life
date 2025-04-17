@@ -48,11 +48,16 @@ function ReviewCard(review:Review) {
 
     return( // ADD LIKED TODO
     <div className='container review'>
-        {user ? (        <div>
-            <img src={bookData?.img_S} alt='Book Cover Image' height={'50px'}/>
+        {user ? (        
+            <div id="book-cover-background">
+                    <Link id="image-link" to={`/books/${bookData?.work_id}`} state={bookData}>
+                        <img id="cover" src={bookData?.img_M} height={'115px'} alt="Book cover image"/>
+                    </Link>
+            {/* <img src={bookData?.img_S} alt='Book Cover Image' height={'100px'}/> */}
         </div>) : (<></>) }
-        <div id='review-content-top'>
-            <Link to={`${review.username}/profile`}>
+        <div className='review-data'>
+            <div id='review-content-top'>
+            <Link to={`/${review.username}/profile`}>
                 <FontAwesomeIcon icon={faUserCircle} />
                 <h5>{review.username}</h5>  
             </Link>
@@ -60,7 +65,7 @@ function ReviewCard(review:Review) {
             <StarRating rating={review.star_rating}/> {/*Whole number ratings only*/}
             {(currentUser.username == review.username) ? 
             <div>
-                <FontAwesomeIcon icon={faTrash} onClick={handleDelete} color={'var(--main-color)'}/>
+                <FontAwesomeIcon className="delete-icon" icon={faTrash} onClick={handleDelete} color={'var(--main-color)'} />
                 <FontAwesomeIcon icon={faPen} onClick={() => setOpen(o => !o)} color={'var(--main-color)'}/>
                 <Popup open={open} closeOnDocumentClick onClose={closeModal} modal>
                     <div className="modal">
@@ -79,6 +84,8 @@ function ReviewCard(review:Review) {
             {review.review_text}
             </p>
         </div>
+        </div>
+        
         
     </div>
     );

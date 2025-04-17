@@ -1,21 +1,22 @@
+import { useNavigate } from "react-router-dom";
 
 
 function CompetitionsSection() {
+    const navigate = useNavigate();
 
 
 
     return(
         <div id='profile-competitions'>
             <div>
-            <h3>Competitions: </h3>
             {/* competitions the user is participating in go here, if no competitions, browse comp page */}
              
 
             </div>
             <div>
-                <h3>My Competitions: </h3>
+                <p>My Competitions: </p>
             {/* competitions the user has created go here */}
-            <button >+ Create Reading Competition</button>
+            <button onClick={() => navigate('/competitions/create')}>+ Create Reading Competition</button>
             </div>
             
 

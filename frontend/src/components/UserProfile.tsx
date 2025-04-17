@@ -4,21 +4,23 @@ import axios, { AxiosError } from "axios";
 import { BookItem, ShelfItem, User } from "../types";
 import MinBookBox from "./MinBookBox";
 import { getBooksInShelf } from "../hooks/fetch";
+import { useNavigate } from "react-router-dom";
 
 
 function UserProfile({library}: {library: ShelfItem[]}) {
+    const nav = useNavigate();
     const [goal, setGoal] = useState(0);
-    const token = localStorage.getItem("access_token");
+    const token = sessionStorage.getItem("access_token");
     const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}");
     console.log(library);
     const initialState:ShelfItem = {shelf_name: '', books_list: []}
-    console.log("Here", library.find((item) => item.shelf_name === "top-5"));
+    // console.log("Here", library.find((item) => item.shelf_name === "top-5"));
 
     // const top5 = (library.find((item) => item.shelf_name === 'top-5')) ? (library.map? get specific item): (initialState)
-    const {shelfBooks, loading, error} = getBooksInShelf('/shelf/top-5');
-    console.log(shelfBooks);
-    const top5 =  (library.length == 0 ) ? (initialState) : (library.find((item) => item.shelf_name === "top-5"));
-    const readList = (library.length == 0 ) ? (initialState) : (library.find((item) => item.shelf_name === "read-books"));
+    // const {shelfBooks, loading, error} = getBooksInShelf('/shelf/top-5');
+    // console.log(shelfBooks);
+    // const top5 =  (library.length == 0 ) ? (initialState) : (library.find((item) => item.shelf_name === "top-5"));
+    // const readList = (library.length == 0 ) ? (initialState) : (library.find((item) => item.shelf_name === "read-books"));
  
 // not getting back actual item, only getting shelf name array
     
@@ -28,35 +30,41 @@ function UserProfile({library}: {library: ShelfItem[]}) {
 
     const submitGoal = async (event:FormEvent) => {
         event.preventDefault();
-        console.log("prior to form submit" , goal)
-
-        // check token expiration and that user is logged in
-
 
         try {
             axios.put('/goals', goal, {headers: {"Authorization":`Bearer ${token}`}}
-            ).then((response) => console.log(response)).catch((error) => {
+            ).then((response) => {
+                console.log(response.data.goal);
+                setGoal(response.data.goal);
+                
+                const updatedUser:User = {
+                    username: currentUser.username,
+                    first_name: currentUser.first_name,
+                    last_name: currentUser.last_name,
+                    goal: response.data.goal
+                }
+                console.log(updatedUser)
+                sessionStorage.setItem('User', JSON.stringify(updatedUser))
+            }
+            ).catch((error) => {
                 console.log(error);
-                console.log(error.response.status)
+                console.log(error.response.status);
             })
         } catch {(error: any) => console.log(error)}
     }
+    
     
   
 
     return(
          <div>
             <div id="reader-goals">
-                <div className='stats'>
-                    <p>Books Read</p>
-
-                </div>          
                 <form id="set-goals">
                      <label htmlFor="goal">My reading goal for {year}: </label>
-                            <input type="number" id="goal" name="goal" min="0" max="100" value={goal} onChange={(e) => setGoal(parseInt(e.target.value))}/>
+                            <input type="number" id="goal" name="goal" min="0" max="100" value={goal} onChange={(e) => setGoal(parseInt(e.target.value ))}/>
                             <input type="submit" onClick={submitGoal} />
-                        </form>
-                <YearlyProgressChart props={[1, goal]} /> 
+                    </form>
+                <YearlyProgressChart props={[1, currentUser.goal]} /> 
             </div>
             
             {/* <div id="top-five-list">

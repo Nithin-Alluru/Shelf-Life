@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import { useNavigate } from "react-router-dom";
+import '../assets/css/Settings.css'
 
 
 function Settings() {
@@ -36,20 +37,23 @@ function Settings() {
     return(
         <div id='settings-container'>
             <h2>Settings</h2>
-            <div id="user-data">
+            <div id="user">
             <FontAwesomeIcon id='user-icon' icon={faUserCircle} size={'xl'}/>
             <h3>{currentUser.username}</h3>
-
-        <button onClick={() => setOpen(o => !o)}>Delete My Account</button> 
-        <Popup open={open} closeOnDocumentClick onClose={closeSettingsModal} modal>
+</div>
+        <button className="delete" onClick={handleDelete}>Delete My Account</button> 
+        {/* <Popup open={open} closeOnDocumentClick onClose={closeSettingsModal} modal>
             <div className="modal">
               <p id='error-message'>Are you sure you would like to delete your account? This cannot be undone. </p>
-              <button id='back' onClick={closeSettingsModal}>No, don't delete my account.</button>
-              <button id='confirm' onClick={handleDelete}>Yes, I would like to delete my account.</button>
+              <div id="confirmation-buttons">
+                <button id='back' onClick={closeSettingsModal}>No, don't delete my account.</button>
+                <button id='confirm' onClick={handleDelete}>Yes, I would like to delete my account.</button>
+              </div>
+              
             </div>
-          </Popup>
+          </Popup> */}
         
-            </div>
+            
         </div>
     );
 }

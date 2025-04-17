@@ -1,4 +1,4 @@
-ul#book-list {
+ul#book-list-page {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -8,4 +8,17 @@ ul#book-list {
 div#page-header h2 {
     color: var(--default-font-color);
     padding-top: 1.5em;
+}
+
+div#book-list-page-nav ul li {
+    padding: 0.5em;
+}
+
+div#book-list-page-nav ul li#selected a{
+    color: #6c63ff;
+}
+li#selected a:hover, li#unselected a:hover {
+    cursor: pointer;
+    color:#6c63ff;
+    text-decoration: none;;
 }

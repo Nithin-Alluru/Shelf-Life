@@ -4,7 +4,7 @@ import { BookItem, CompetitionBookListItem, User } from "../types";
 import { Link, useNavigate } from "react-router-dom";
 import BookListCard from "./BookListCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowLeftLong, faArrowRight, faArrowRightLong, faLessThan } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowLeftLong, faArrowRight, faArrowRightLong, faLessThan, faX } from "@fortawesome/free-solid-svg-icons";
 import { ListTypes } from "../Reducers/CompetitionBookListReducer";
 import '../assets/css/CompetitionForm.css'
 import axios from "../../axiosConfig";
@@ -71,6 +71,13 @@ function CompetitionForm() {
             <div id="competition-form">
                 <button id="back-button" onClick={() => navigate(-1)}><FontAwesomeIcon icon={faArrowLeftLong} size={'xs'}/> Back</button>
                 <form id="create-comp">
+                    <div id='cancel-icon'>
+                        <FontAwesomeIcon id="cancel" icon={faX} onClick={() => {
+                        sessionStorage.removeItem("creatingComp");
+                        navigate('/competitions');
+                    }}/>
+                    </div>
+                    
                     <h2>New Competition</h2>
                     <label htmlFor="comp-name">Competition Name: 
                     <input type="text" id="comp-name" onChange={(e) => setCompName(e.target.value)} required></input></label>

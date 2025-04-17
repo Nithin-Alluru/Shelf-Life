@@ -245,21 +245,13 @@ def set_goal():
 
 
 
-@app.route('/goals', methods=["GET"])
-@jwt_required()
-def get_goals():
-    current_user = get_jwt_identity()  # Get the current user's identity from the JWT
-    token = request.headers.get("Authorization")
-    print("here 22")
-
-    if not token:
-        return jsonify({"Error: Missing authorization token"}), 401
-    
+@app.route('/<string:username>/goals', methods=["GET"])
+def get_goals(username):
     conn = db_connect()
     cursor = conn.cursor()
 
     query = "SELECT goal FROM users WHERE username = ?"
-    cursor.execute(query, (current_user,))
+    cursor.execute(query, (username,))
     goal = cursor.fetchone()
     
     return jsonify(goal[0]), 200
@@ -599,7 +591,7 @@ def get_following(username):
     # are enumerations of the values of the sqlite3 rows. 
     # like 1, friendname
     followers = [
-        {"follows_"+str(index + 1): row[0]}
+        {"username": row[0]}
         for index, row in enumerate(rows)
     ]
     result = followers

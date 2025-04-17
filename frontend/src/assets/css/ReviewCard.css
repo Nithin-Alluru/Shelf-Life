@@ -4,7 +4,7 @@ div.container.review {
     min-height: 5vh;
     max-height: max-content;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin: 1em;
 }
 
@@ -42,4 +42,10 @@ p#review-text {
 }
 
 
+div.review-data{
+    width: 100%;
+}
 
+svg.delete-icon {
+    padding-left: 0.5em;
+}

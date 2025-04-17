@@ -15,8 +15,21 @@ import CategoryPage from "./components/CategoryPage"
 import SearchResultsPage from "./components/SearchResultsPage"
 import CompetitionsPage from "./components/CompetitionsPage"
 import CompetitionForm from "./components/CompetitionForm"
+import CompetitionDetailPage from "./components/CompetitionDetailPage"
+import { useEffect } from "react"
 
 function App() {
+
+  // trigger react page reload every 5 minutes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      window.location.reload();
+    }, 300000); 
+
+    return () => clearInterval(interval);
+  }, []);
+
+  
   return (
     <Router basename="">
       <AppHeader/>
@@ -25,17 +38,15 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path=':user/profile' element={<ReaderProfilePage/>}/>
-
-          <Route path='/books' element={<SearchResultsPage/>}/>
+          <Route path='/books' element={<BookListPage/>}/>
           <Route path='/books/:work_id' element={<BookDetailPage/>}/>
           <Route path='/categories' element={<CategoryPage/>}>
             <Route path=':category' element={<CategoryPage/>}/>
           </Route> 
           <Route path="/review" element={<ReviewForm />} />
-          
           <Route path="/competitions" element={<CompetitionsPage />} />
           <Route path="/competitions/create" element={<CompetitionForm/>}/> 
-          {/* <Route path="/competitions/:id" element={<CompetitionsDetailPage />} /> */}
+          <Route path="/competitions/:name" element={<CompetitionDetailPage />} />
           <Route path="*" element={<PageNotFound/>}/>     
         </Routes>
       <AppFooter/>

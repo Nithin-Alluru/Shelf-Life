@@ -31,7 +31,7 @@ function UserReviewsPage({reviewData, loading, error}:{reviewData: Review[], loa
                         liked={review.liked}
                     />
                 ))
-            ) : (!loading && !error && <p>No reviews yet. <Link id='reviews-cta' to={'/books'}>Get started <FontAwesomeIcon icon={faArrowRight}/></Link></p>
+            ) : (!loading && !error && <p>No reviews yet. <Link id='reviews-cta' to={'/categories/fiction'}>Get started <FontAwesomeIcon icon={faArrowRight}/></Link></p>
                                 )}
         </ul>
         </div>
