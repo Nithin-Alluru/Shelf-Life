@@ -13,5 +13,5 @@ describe('AppHeader', () => {
     expect(screen.getByRole('button', { name: /Sign In/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Register/i })).toBeInTheDocument();
     
-  });
+  }); 
 });

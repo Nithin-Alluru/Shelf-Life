@@ -17,4 +17,4 @@ describe('CompStatus', () => {
     expect(screen.getByRole('button', { name: /Clear List/i}).toBeInTheDocument());
     
     });
-});
+}); 

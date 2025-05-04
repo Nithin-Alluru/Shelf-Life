@@ -9,6 +9,6 @@ describe('CategoryNav', () => {
               <CategoryNav />
             </BrowserRouter>
           );
-    });
+    }); 
     
 });

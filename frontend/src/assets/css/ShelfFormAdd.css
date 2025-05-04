@@ -1,0 +1,22 @@
+form#create-shelf {
+    background-color: var(--light-primary-color);
+    padding: 2em;
+    text-align: center;
+    border-radius: 12px;
+    color: var(--dark-primary-color);
+    margin-bottom: 20%;
+    
+}
+
+form#create-shelf input[type=text] {
+    height: 2em;
+    color: var(--dark-primary-color);
+    background-color: white;
+    border-radius: 8px;
+    padding: .25em;
+    font-size: 1em;
+    margin: 2em 0.5em;
+}
+form#create-shelf input[type=text]:focus {
+    border-color:  #5c55e7;
+}

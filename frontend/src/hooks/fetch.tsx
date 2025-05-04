@@ -67,7 +67,6 @@ export function getReviewsForUser(uri:string) {
               },
         })
         .then((response) => {
-            console.log(response.data)
             setReviewData(response.data)})
         .catch((error) => {
             (error.response.status == 401) ? nav('/login') : 
@@ -94,7 +93,6 @@ export function getReviewsForBook(uri:string) {
             headers: { "Content-Type": "application/json" }
         })
         .then((response) => {
-            console.log(response.data)
             setReviewData(response.data)})
         .catch((error) => {
             console.error(error);

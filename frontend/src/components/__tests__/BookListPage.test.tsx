@@ -11,6 +11,6 @@ describe('BookListPage', () => {
           );
     
 
-    expect(screen.getByLabelText(/Loading books.../i).toBeInTheDocument());
-    });
+    expect(screen.getByText('Loading Books...')).toBeInTheDocument();
+    }); 
 });

@@ -14,5 +14,5 @@ describe('BookListCard', () => {
     expect(screen.getByRole('Link', { name: /See more/i}).toBeInTheDocument());
     expect(screen.getByRole('button', {name: /Remove from Competition/i}).toBeInTheDocument());
     expect(screen.getByRole('button', {name: /Add to Competition/i}).toBeInTheDocument());
-    });
+    }); 
 });

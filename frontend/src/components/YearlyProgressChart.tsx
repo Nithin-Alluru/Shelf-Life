@@ -7,7 +7,6 @@ import '../assets/css/YearlyProgressChart.css'
 
 function YearlyProgressChart({progress, goal}: {progress:number, goal:number}) {
     let year = new Date().getFullYear();
-    const data = (dataEntry) => (dataEntry.value * 10)
     return(
         <div className='chart'>
             <span className='key'>
@@ -24,7 +23,7 @@ function YearlyProgressChart({progress, goal}: {progress:number, goal:number}) {
                 totalValue={goal}
                 background='#6f7588'
                 labelPosition={60}
-                label={({ dataEntry }) => (dataEntry.value/goal *100) + dataEntry.title } 
+                label={({ dataEntry }) => Math.trunc(dataEntry.value/goal *100) + dataEntry.title } 
                 labelStyle={
                     {
                         "fontSize": "5px",
