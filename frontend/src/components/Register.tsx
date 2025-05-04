@@ -54,12 +54,12 @@ function Register() {
             });
             //create bookshelves that apply to all users
             console.log(loginRes.data.access_token)
-            axios.post('/shelf',{shelf_name: "top-5"},  {
+            axios.post('/shelf',{shelfName: "Favorite Books"},  {
                 headers: {
                     "Authorization": `Bearer ${loginRes.data.access_token}`
             }
             }).then((response) => console.log(response.data)).catch((error) => console.error(error));
-            axios.post('/shelf', {shelf_name:"read-books"} , {
+            axios.post('/shelf', {shelfName:"Books I've Read"} , {
                 headers: {
                     "Authorization": `Bearer ${loginRes.data.access_token}`
                 } 

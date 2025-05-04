@@ -16,21 +16,18 @@ function AppHeader() {
     const nav = useNavigate();
     const par = useParams();
     const token = sessionStorage.getItem('access_token');
-    const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}")
 
 
     useEffect(() => {
         if (!token && !par) {
-            sessionStorage.removeItem("creatingComp");
             logOut();
         }
     })
-
-
     
     function logOut(){
         sessionStorage.removeItem('User');
         sessionStorage.removeItem("access_token");
+        localStorage.removeItem("CompBookList");
         nav('/login');
     }
 

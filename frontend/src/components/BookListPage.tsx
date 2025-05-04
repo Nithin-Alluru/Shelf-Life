@@ -7,7 +7,7 @@ import BookListCard from "./BookListCard";
 
 
 
-function BookListPage() { // not longer than 1000 characters
+function BookListPage() { 
     const {category} = useParams(); // Fetch category dynamically from URL
     const [searchParams] = useSearchParams();   // Handle search query
     const searchTerm = searchParams.get("search") || "";

@@ -11,6 +11,7 @@ const UserLoginStatus = () => {
     function logOut(){
         sessionStorage.removeItem('User');
         sessionStorage.removeItem("access_token");
+        localStorage.removeItem("createComp");
         nav('/login');
     }
     

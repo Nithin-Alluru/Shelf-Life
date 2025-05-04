@@ -26,13 +26,8 @@ function ReviewFormEdit(review: Review) {
     useEffect(() => {
         axios.get(`/book/${review.work_id}`).then((response) => {
             setBookData(response.data);
-
-            console.log(response.data);
-        }
-        ).then(() => console.log("book data", bookData))
-
-
-    }, [])
+        });
+    }, []);
 
   
     const handleSubmit = async (event: FormEvent) => {

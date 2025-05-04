@@ -1,6 +1,6 @@
 :root {
     color-scheme: light dark;
-    background-color: #20232d;
+    background-color:  #1c1c2b;
 
     --default-font-color: #eaeee6;
     --secondary-font-color: #20232d;
@@ -8,6 +8,7 @@
     --light-accent-color: #829584;
     --main-color: #577678;
     --dark-accent-color: #6f7588;
+    --accent-color: #5c55e7;
 
     --light-primary-color: #eaeee6;
     --dark-primary-color: #20232d;
@@ -49,6 +50,9 @@ a {
 a:hover {
     color: var(--light-accent-color)
 }
+
+
+
 
 /* Button styles */
 button {
@@ -155,6 +159,25 @@ a.reviews-cta {
       color: var(--secondary-font-color);
       background-color: var(--light-primary-color);
     }
+    :root {
+        background-color: #20232d;
+        
+    
+        --default-font-color: #eaeee6;
+        --secondary-font-color: #20232d;
+    
+        --light-accent-color: #829584;
+        --main-color: #577678;
+        --dark-accent-color: #6f7588;
+    
+        --light-primary-color: #eaeee6;
+        --dark-primary-color: #20232d;
+    
+        --error-color: rgb(229, 82, 82);
+        font-family: Arial, Helvetica, sans-serif;
+    
+    }
+
 
   }
 

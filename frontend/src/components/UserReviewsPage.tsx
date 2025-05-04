@@ -1,5 +1,4 @@
 import { Link, useLocation } from "react-router-dom";
-import { getReviewsForUser } from "../hooks/fetch";
 import { Review } from "../types";
 import ReviewCard from "./ReviewCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

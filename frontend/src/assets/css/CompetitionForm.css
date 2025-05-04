@@ -52,6 +52,7 @@ input#comp-name {
 form#create-comp ul#book-list {
     min-height: 20vh;
     display: flex;
+    flex-wrap: wrap;
 }
 
 ul#book-list li {

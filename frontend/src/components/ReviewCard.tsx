@@ -15,7 +15,7 @@ function ReviewCard(review:Review) {
     const nav = useNavigate();
     const {user} = useParams();
     const token = sessionStorage.getItem('access_token');
-    const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}")
+    const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}");
     const [message, setMessage] = useState('');
     const [bookData, setBookData] = useState<BookItem>();
     const [open, setOpen] = useState(false);

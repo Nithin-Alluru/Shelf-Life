@@ -1,0 +1,9 @@
+form#add-book {
+    color: var(--secondary-font-color);
+    padding: 2em;
+    font-size: 1.2em;
+}
+
+form#add-book label {
+    display: block;
+}

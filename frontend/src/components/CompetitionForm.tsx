@@ -9,14 +9,37 @@ import { ListTypes } from "../Reducers/CompetitionBookListReducer";
 import '../assets/css/CompetitionForm.css'
 import axios from "../../axiosConfig";
 import { AuthStore } from "../Contexts/AuthContext";
+import { Bounce, toast } from "react-toastify";
 
 function CompetitionForm() {
     const navigate = useNavigate();
-    const [error, setError] = useState('');
 
-    const [message, setMessage] = useState("");
+    const successMessage = () => 
+        toast.success(`Competition created successfully!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
 
-    
+    const errorMessage = () => 
+        toast.error("Error! Unable to create competition. Please make sure you have entered a title and end date for your competition or try again later.", {
+            position: "top-right",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
+
     const token = sessionStorage.getItem("access_token");
     const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}")
     useEffect(() => {
@@ -43,8 +66,7 @@ function CompetitionForm() {
 
     
         if (!token || !currentUser.username ) {
-          setMessage("Missing user or book info.");
-          return;
+          navigate('/login');
         }
         const work_ids = compList.map((item) => item.work_id);
         console.log(work_ids)
@@ -60,20 +82,23 @@ function CompetitionForm() {
               },
             }
           );
-          setMessage("Competition successfully created!");
+          successMessage();
           dispatch({type:ListTypes.CLEAR});
           sessionStorage.removeItem('creatingComp');
           navigate('/competitions'); // Redirect after success
         } catch (err) {
           console.error(err);
-          setMessage("Failed to create competition. Please try again later.");
+          errorMessage();
         } 
     }
 
     return(
         <main>
             <div id="competition-form">
-                <button id="back-button" onClick={() => navigate(-1)}><FontAwesomeIcon icon={faArrowLeftLong} size={'xs'}/> Back</button>
+                <button id="back-button" onClick={() => {
+                    sessionStorage.removeItem('creatingComp');
+                    navigate(-1);
+                }}><FontAwesomeIcon icon={faArrowLeftLong} size={'xs'}/> Cancel</button>
                 <form id="create-comp">
                     <div id='cancel-icon'>
                         <FontAwesomeIcon id="cancel" icon={faX} onClick={() => {
@@ -82,7 +107,7 @@ function CompetitionForm() {
                     }}/>
                     </div>
                     
-                    <h2>New Competition</h2>
+                    <h2>Create Competition</h2>
                     <label htmlFor="comp-name">Competition Name: 
                     <input type="text" id="comp-name" onChange={(e) => setCompName(e.target.value)} required></input></label>
                     <label htmlFor="end-date" >Competition end date: 
@@ -121,7 +146,7 @@ function CompetitionForm() {
                                 {compList.length != 0 ? (<button className="secondary" onClick={() => dispatch({type:ListTypes.CLEAR})}>Clear List</button>) : <></>} 
                             </ul>
                         </div>
-                        <button className='primary' type="submit" onClick={handleSubmit}>Create Competition</button>    
+                        <button className='primary' type="submit" onClick={handleSubmit}>Submit</button>    
                 </form>
               </div>
         </main>

@@ -3,16 +3,20 @@ import { Link, RouterProviderProps } from "react-router-dom";
 import '../assets/css/BookListCard.css'
 import '../assets/css/global.css'
 import '../assets/css/CompStatus.css'
-import { useContext, useEffect } from "react"; // used for testing
+import { useContext, useEffect, useState } from "react"; // used for testing
 import { ListStore } from "../Contexts/CompetitionBookListContext";
 import { ListTypes } from "../Reducers/CompetitionBookListReducer";
+import Popup from "reactjs-popup";
+import AddBookToShelf from "./AddBookToShelf";
 
 
 function BookListCard(props:BookItem) {
     //shorten description to fit into book container
-    const preview = props.description.slice(0, 150);
+    // const preview = props.description.slice(0, 150);
     const { compList, dispatch } = useContext(ListStore);
     const compStatus = sessionStorage.getItem("creatingComp");
+
+    const token = sessionStorage.getItem("access_token");
 
     const addToComp = () => {
         dispatch({type: ListTypes.ADD, item: props, work_id: props.work_id})
@@ -37,7 +41,7 @@ function BookListCard(props:BookItem) {
                         </Link>
                         <h4>by <Link id="author-link" to={`${props.author}`}>{props.author}</Link></h4>
                     </div>
-                    <p>{preview} ...<Link id="description-link" to={`/books/${props.work_id}`} state={props}>See more</Link></p>
+                    <p>{props.description} ...<Link id="description-link" to={`/books/${props.work_id}`} state={props}>See more</Link></p>
                     {compStatus ? (isInList ? (<button className='clear' onClick={removeFromComp}>Remove from Competition</button>) : (<button className='primary list' onClick={addToComp}>Add to Competition</button>)
                     ) : (<></>)}
                 </div>

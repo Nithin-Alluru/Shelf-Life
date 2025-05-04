@@ -88,9 +88,10 @@
   }
   
   div.competition-container .secondary {
-    background-color: #91a1ff;
+    background-color: #5c55e7;
     color: #fff;
-    border: none;
+    border-style: solid;
+    border-width: thin;
     padding: 0.5rem 1.25rem;
     border-radius: 6px;
     font-size: 0.85rem;

@@ -15,5 +15,5 @@ describe('BookDetailCard', () => {
     expect(screen.getByLabelText(/Estimated Read Time/i).toBeInTheDocument());
     expect(screen.getByRole('button', { name: /Mark As Read/i}).toBeInTheDocument());
     expect(screen.getByRole('button', { name: /+ New Review/i}).toBeInTheDocument());
-  }); 
+  });  
 });

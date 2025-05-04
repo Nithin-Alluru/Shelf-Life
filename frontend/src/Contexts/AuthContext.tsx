@@ -7,7 +7,7 @@ export const AuthStore = createContext<{currentUser:User}>({currentUser: initial
 AuthStore.displayName = 'AuthContext';
 
 function AuthContext({children} : ContextProps) {
-    const token = sessionStorage.getItem("access_token")
+    const token = sessionStorage.getItem("access_token");
     const [currentUser, setUser] = useState(initialUserState);
 
     useEffect(() => {
@@ -18,7 +18,6 @@ function AuthContext({children} : ContextProps) {
             }
             }).then((response) => {
                 const resp = response.data
-                console.log(resp.username)
                 const userData:User = {username: resp.username, first_name: resp.first_name, last_name: resp.last_name, goal: resp.goal}
                 setUser(userData);
                 sessionStorage.setItem('User', JSON.stringify({username: resp.username, first_name: resp.first_name, last_name: resp.last_name, goal: resp.goal}))
@@ -26,7 +25,8 @@ function AuthContext({children} : ContextProps) {
                 if (error.response.status === 401) {
                     (sessionStorage.removeItem("access_token"));
                     (sessionStorage.removeItem("User"));
-                    sessionStorage.removeItem("creatingComp");
+                    localStorage.removeItem("creatingComp");
+  
 
                 }
                 console.log(error);
@@ -34,14 +34,6 @@ function AuthContext({children} : ContextProps) {
             }
     }, []);
 
-        
-    function logOut(){
-        sessionStorage.removeItem('User');
-        sessionStorage.removeItem("access_token");
-        console.log('removed tokens')
-        sessionStorage.removeItem("creatingComp");
-        window.location.reload();
-    }
 
     
     return (
