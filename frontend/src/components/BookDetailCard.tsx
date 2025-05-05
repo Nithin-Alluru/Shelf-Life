@@ -12,20 +12,21 @@ import axios from '../../axiosConfig';
 import { Bounce, toast } from 'react-toastify';
 import AddBookToShelf from './AddBookToShelf';
 
-// DO NOT DELETE COMMENTS OR IMPORTS IN THIS FILE
-function BookDetailCard(props: {book:BookItem, avgRating:String}) {
 
+function BookDetailCard(props: {book:BookItem, avgRating:String}) {
+    // modal controls for create review popup
     const [open, setOpen] = useState(false);
     const closeModal = () => setOpen(false);
+    
+    // modal controls for add to library popup
     const [openLib, setOpenLib] = useState(false);
     const closeModalLib = () => setOpen(false);
-
     const token = sessionStorage.getItem('access_token');
     const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}")
 
     const successMessage = () => 
         toast.success(`Marked ${props.book.title} by ${props.book.author} as read.`, {
-            position: "top-right",
+            position: "top-left",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -38,7 +39,7 @@ function BookDetailCard(props: {book:BookItem, avgRating:String}) {
 
             const errorMessage = () => 
                 toast.error(`Oops! We're having trouble adding "${props.book.title}" to your list of read books. Please try again later.`, {
-                    position: "top-right",
+                    position: "top-left",
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -51,7 +52,6 @@ function BookDetailCard(props: {book:BookItem, avgRating:String}) {
       
     // user adds a book to their list of read books
     function handleAddToList() {
-        console.log(token)
 
         const data = props.book.work_id
 
@@ -105,7 +105,7 @@ function BookDetailCard(props: {book:BookItem, avgRating:String}) {
             {token? ( <button type="button" className="primary" onClick={() => setOpenLib(o => !o)}>+Add to Library</button>) : (<>/</>)}
             <Popup open={openLib} closeOnDocumentClick onClose={closeModalLib} modal>
                     <div className="modal">
-                    <span id='review-details'> <AddBookToShelf/></span>
+                    <span id='review-details'> <AddBookToShelf closeModal={() => setOpenLib(false) } /></span>
                     </div>
                 </Popup>
                 <button className='secondary' onClick={handleAddToList}>Mark as Read</button>

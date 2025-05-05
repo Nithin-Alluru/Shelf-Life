@@ -2,11 +2,8 @@ div#reader-goals {
     display: flex;
     align-items: center;
     flex-direction: column;
-    border-style: solid;
-    padding: 1em;
-    border-width: thin;
-    border-color: var(--main-color);
-    min-height: max-content;
-    max-width: fit-content;
+}
 
+div#chart {
+    width: 5em;
 }

@@ -1,53 +1,35 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import '../assets/css/UserProfile.css'
-import axios, { AxiosError } from "axios";
-import {BookItem, ShelfItem, ShelfName, User } from "../types";
+
+import { User } from "../types";
 import { useNavigate, useParams } from "react-router-dom";
 import YearlyProgressChart from "./YearlyProgressChart";
+import useShelfBooks from "../hooks/useShelfBooks";
+import LibraryShelfList from "./LibraryShelfList";
+import axios from "../../axiosConfig";
 
 
 
-function UserProfile({library}: {library: ShelfItem[]}) {
+function UserProfile() {
     const nav = useNavigate();
     const [goal, setGoal] = useState(0);
     const token = sessionStorage.getItem("access_token");
     const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}");
-    console.log(library)
-    console.log(library.length)
 
     var {user} = useParams(); // get which user's profile is loaded
-    const [shelves, setShelves] = useState<String[]>([]);
-    const [loading, setLoading] = useState(true); // add loading state
-    const [error, setError] = useState(''); // handle errors gracefully
+    let year = new Date().getFullYear();
+    // get the user's list of favorite books 
+    const {shelfBooksList:readBooksList, loadingBookshelf, bookshelfError} = useShelfBooks(user!, "Books I've Read");
 
-    // get list of this users' bookshelves to display
-    useEffect(() => {
-        setLoading(true);
-        setError('');
-        console.log("param" , user);
-
-        axios.get(`/shelf/${user}`)
-        .then((response) => {
-            var list:ShelfName[] = response.data
-            const newlist = list.flatMap((item:ShelfName) => item.shelf_name);
-            setShelves(newlist);
-        }
-        ).catch((error) => {
-            console.error("❌ Shelves fetch error:", error);
-            setError("Error loading shelf data. Please try again later.");
-        }).finally(() => {setLoading(false)
-  
-        })
-    }, []);
-
-    const initialState:ShelfItem = {shelf_name: '', book_list: []}
-    
-
-    const readList = (library.length === 0 ) ? (initialState) : (library.find((item) => item.shelf_name === "read-books"));
-
+    const isCurrentUserProfile = (user === currentUser.username);
+    console.log(isCurrentUserProfile)
+    let title = 'My';
+    if (!isCurrentUserProfile) {
+      title= user + "'s"
+    };
     // get the user's reading goal and update graph on page reload
     useEffect(() => {
-        axios.get(`${currentUser.username}/goals`
+        axios.get(`${user}/goals`
         ).then((response) => {
             console.log("GOAL ", response.data);
             response.data === -1 ? setGoal(0) : setGoal(response.data);
@@ -55,8 +37,7 @@ function UserProfile({library}: {library: ShelfItem[]}) {
 
     }, [])
 
-    let year = new Date().getFullYear();
-
+    
     const submitGoal = async (event:FormEvent) => {
         event.preventDefault();
 
@@ -91,15 +72,20 @@ function UserProfile({library}: {library: ShelfItem[]}) {
     }
     
     return(
-         <div>
-                <YearlyProgressChart progress={1} goal={goal} />
-                <form id="set-goals">
-                     <label htmlFor="goal">My reading goal for {year}: </label>
+         <span>
+            <div id='goals'>
+                <YearlyProgressChart progress={readBooksList.length} goal={goal} />
+                {isCurrentUserProfile ? (                
+                    <form id="set-goals">
+                        <label htmlFor="goal">{title} reading goal for {year}: </label>
                             <input type="number" id="goal" name="goal" min="0" max="100" value={goal} onChange={(e) => setGoal(parseInt(e.target.value ))}/>
                             <input type="submit" onClick={submitGoal} />
-                </form>  
-                {/* <LibraryShelfList shelvesList={(topFive ? ([topFive]) : ([]))}/> */}
-    </div>
+                    </form>  
+            ) :(<></>)}
+            </div>
+                
+                <LibraryShelfList shelfName={"Favorite Books"}/>       
+        </span>
     );
 }
 

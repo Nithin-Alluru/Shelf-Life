@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "../../axiosConfig";
 import { BookItem, work_ids } from "../types";
+import { Bounce, toast } from "react-toastify";
 
 
 // helper method for getting the list of books in a user's bookshelf
@@ -12,42 +13,45 @@ export const useShelfBooks = (username:string, shelfName:string) => {
   var bookid_list:string[] = [];
   var bookList:BookItem[] = [];
 
-  const findItem = ((array:BookItem[], work_id:string)=> array.find((item) => item.work_id == work_id));
   useEffect(() => {
     const fetchShelfBooks = async () => {
       setLoadingBookshelf(true);
       setBookshelfError('');
 
       try {
-        const response = await axios.get(`/shelf/${username}/${shelfName}`, {
-          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` }
+        const shelfResponse = await 
+          axios.get(`/shelf/${username}/${shelfName}`, {
+          headers: { 
+            "Content-Type": "application/json", 
+            "Authorization": `Bearer ${token}` 
+          },
         });
-        const list:work_ids[]= response.data[0].books
-        bookid_list = (list.flatMap((item:work_ids)=> item.work_id))
+
+        const list:work_ids[]= shelfResponse.data[0].books;
+        bookid_list = (list.flatMap((item:work_ids)=> item.work_id));
+
         console.log(bookid_list)
-        // get book items in this shelf
-        bookid_list.forEach((item) => {
-          axios.get(`/book/${item}`)
-            .then((response) => {
-                // don't display duplicates
-                if(!findItem(bookList, response.data.work_id)) {
-                    bookList.push(response.data)
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                setBookshelfError('Failed to load liked books. Please try again later.');
-            }).finally(() => {
-                if (bookList.length == bookid_list.length) {
-                    setShelfBooksList(bookList);
-                    
-                }
-                setLoadingBookshelf(false);
-        })})
+
+        const bookList:BookItem[] = (
+          await Promise.all(
+          bookid_list.map(async (work_id): Promise<BookItem | null> => {
+            try {
+              const bookRes = await axios.get(`/book/${work_id}`);
+                return bookRes.data;
+            } catch {
+              console.error(`Error fetching book with work id: ${work_id} in shelf: ${shelfName}`);
+              return null;
+            }
+          }
+        )
+        ).then((books) => books.filter((b):b is BookItem => b !== null)));
+
+        setShelfBooksList(bookList);
       } 
       catch (error) {
         console.log(`Error loading books from shelf ${shelfName}`);
         // show error- oops were having trouble getting your read books list
+        toast.error(`Failed to load shelf: ${shelfName}. Please try again later.`)
         setBookshelfError('Failed to load shelf books.');
       } 
       finally {

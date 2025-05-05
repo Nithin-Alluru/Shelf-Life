@@ -12,10 +12,12 @@ button.delete {
     background-color: var(--error-color);
     border-style: solid;
     border-width: thin;
-    border-color: var(--secondary-font-color);
+    border-color: var(--light-primary-color);
 }
 button.delete:hover {
-    background-color: red;
+    background-color: var(--light-primary-color);
+    color: var(--error-color);
+    border-color: var(--error-color);
 }
 
 div#settings-container div#user-data {

@@ -1,0 +1,20 @@
+ul#network-nav li {
+    padding: 0.25em;
+    margin: 1em;
+}
+
+ul#following-list, ul#followers-list {
+    display: flex;
+    flex-direction: column;
+}
+
+ul#following-list li, ul#followers-list li {
+    display: flex;
+    padding:0.5em;
+    background-color: #2a2a3b;
+    border-radius: 8px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0.5em 0;
+}
+

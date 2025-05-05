@@ -12,7 +12,7 @@ import AddBookToShelf from "./AddBookToShelf";
 
 function BookListCard(props:BookItem) {
     //shorten description to fit into book container
-    // const preview = props.description.slice(0, 150);
+    const preview = props.description?.slice(0, 150) ?? "No summary available.";
     const { compList, dispatch } = useContext(ListStore);
     const compStatus = sessionStorage.getItem("creatingComp");
 
@@ -41,7 +41,7 @@ function BookListCard(props:BookItem) {
                         </Link>
                         <h4>by <Link id="author-link" to={`${props.author}`}>{props.author}</Link></h4>
                     </div>
-                    <p>{props.description} ...<Link id="description-link" to={`/books/${props.work_id}`} state={props}>See more</Link></p>
+                    <p>{preview} ...<Link id="description-link" to={`/books/${props.work_id}`} state={props}>See more</Link></p>
                     {compStatus ? (isInList ? (<button className='clear' onClick={removeFromComp}>Remove from Competition</button>) : (<button className='primary list' onClick={addToComp}>Add to Competition</button>)
                     ) : (<></>)}
                 </div>
