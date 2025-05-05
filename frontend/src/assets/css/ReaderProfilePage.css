@@ -28,7 +28,7 @@ div#profile-header-content {
     padding: 1rem;
     margin-bottom: 3%;
     align-items: center;
-
+    margin-top: 2em;
 }
 
 div#user-container {
@@ -93,7 +93,7 @@ div#profile-nav ul {
 }
 
 div.stats:hover {
-    color: red;
+    color: #6c63ff;
     cursor: pointer;
 }
 
@@ -102,5 +102,18 @@ div#reader-goals {
     max-height: 30vh;
     align-items: center;
     justify-content: space-evenly;
+    max-height: min-content;
+}
 
+
+div#reader-goals span div#goals {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: min-content;
+}
+div#profile-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
 }

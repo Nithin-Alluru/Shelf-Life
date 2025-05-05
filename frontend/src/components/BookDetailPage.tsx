@@ -30,6 +30,7 @@ function BookDetailPage() {
                 {reviewData != undefined && reviewData.reviews_list.length > 0 ? (
                     reviewData.reviews_list.map((review: Review) => (
                         <ReviewCard
+                            key={review.review_id}
                             review_id={review.review_id}
                             work_id={review.work_id}
                             username={review.username}

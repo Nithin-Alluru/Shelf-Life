@@ -5,10 +5,22 @@ span.key {
 
 div.chart {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    height: 20em;
+    align-self:center;
+    text-align: center;
+    display: inline-flex;
+    padding: 1em;
+
+
 }
 
 div#profile-header-content span.key {
     display: none;
+}
+
+div.chart span.key p {
+    width: max-content;
 }
 

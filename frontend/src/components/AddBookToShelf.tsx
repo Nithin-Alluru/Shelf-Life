@@ -32,6 +32,19 @@ function AddBookToShelf() {
             transition: Bounce,
             });
 
+            const errorMessage = () => 
+                toast.error(`Oops! We're having trouble adding books to your library right now. Please try again later.`, {
+                    position: "top-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                    });
+
     // get list of this users' bookshelves to display
     useEffect(() => {
         setLoading(true);
@@ -43,10 +56,12 @@ function AddBookToShelf() {
             var list:ShelfName[] = response.data
             const newlist = list.flatMap((item:ShelfName) => item.shelf_name);
             setShelves(newlist);
+
         }
         ).catch((error) => {
             console.error("❌ Shelves fetch error:", error);
             setError("Error loading shelf data. Please try again later.");
+
         }).finally(() => setLoading(false))
     }, []);
 
@@ -77,6 +92,7 @@ function AddBookToShelf() {
             nav(0);
         })
         } catch (err) {
+            errorMessage();
           console.error(err);
         }
       };
@@ -89,7 +105,7 @@ function AddBookToShelf() {
         <FontAwesomeIcon className="x" icon={faXmark} color={"var(--secondary-font-color)"} size={'lg'} onClick={() => navigate(0)}/>
         <form id='add-book'
             onSubmit={handleSubmit}>
-        <label htmlFor="shelves">Choose a shelf:</label>
+        <label htmlFor="shelves">Which shelf would you like to add this book to?</label>
             {loading ? (<p>Loading shelves...</p>) : (error) ? (<p style={{ color: "red" }}>{error}</p>) : 
                 (<select name="shelves" id="select-shelf" onChange={handleChange}>
                                 {shelves.length > 0 ? (

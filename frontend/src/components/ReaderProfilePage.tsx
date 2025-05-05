@@ -21,18 +21,14 @@ import { Bounce, toast } from "react-toastify";
 import { useCompetitions } from "../Contexts/CompetitionContext";
 import useShelfBooks from "../hooks/useShelfBooks";
 
-type ShelfName= {
-  shelf_name:string
-}
-type work_ids= {
-  work_id: string
-}
 
 function ReaderProfilePage() {
+  let year = new Date().getFullYear();
   const currentUser:User = JSON.parse(sessionStorage.getItem('User') || "{}")
   const token = sessionStorage.getItem("access_token");
   let iscurrentUsersProfile = true;
-  
+  const [selected, setSelected] = useState('Profile');
+
   // open/closed state of settings modal
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
@@ -52,55 +48,25 @@ const navigate = useNavigate();
 if(!token || !currentUser.username) {
   navigate('/login');
 }
-  const [shelves, setShelves] = useState<String[]>([]);
-  // const [loading, setLoading] = useState(true); // add loading state
-  // const [error, setError] = useState(''); // handle errors gracefully  
 
-
-
-
-
-
-  const [selected, setSelected] = useState('Profile');
-
-
-
-
-
-
-
-  const message:string = useLocation().state; 
-
-
-  const [books, setBooks] = useState<BookItem[]>([]);
-
-  const [shelfItems, setShelfItems] = useState<BookItem[]>([]);
-  const [hasError, setHasError] = useState(false);
-
-  var bookid_list:string[] = [];
-  var bookList:BookItem[] = [];
 
 
 
 
   const {reviewData, loading, error} = getReviewsForUser(`/user/reviews`);
-
   const likedBookIds = (reviewData.filter(review => review.liked)).flatMap(item => item.work_id)
 
 
  
   const [followersOrFollowingSelected, setFollowersOrFollowingSelected] = useState('');
-  var shelvesList:ShelfItem[] = [];
-  // const [library, setLibrary] = useState<ShelfItem[]>([]) 
 
   
-
-  const {shelfBooksList:currentUserReadBooksList, loadingBookshelf:currentUserLoadingReadBooks, bookshelfError:currentUserReadBooksError} = useShelfBooks(currentUser.username, "Books I've Read");
+  // const {shelfBooksList:currentUserReadBooksList, loadingBookshelf:currentUserLoadingReadBooks, bookshelfError:currentUserReadBooksError} = useShelfBooks(currentUser.username, "Books I've Read");
   const {shelfBooksList:otherUserReadBooksList, loadingBookshelf:otherUserLoadingReadBooks, bookshelfError:otherUserReadBooksError} = useShelfBooks(user!, "Books I've Read");
 
-  console.log("USER READING LIST LENGTH" , currentUserReadBooksList);
+  // console.log("USER READING LIST LENGTH" , currentUserReadBooksList);
   console.log("OTHER USER READING LIST LENGTH" , otherUserReadBooksList.length);
-const [readingGoal, setReadingGoal] = useState<number>(0);
+  const [readingGoal, setReadingGoal] = useState<number>(0);
   
   const [followers, setFollowers] = useState<User[]>([]); // list of users that are following the user
   const [following, setFollowing] = useState<User[]>([]); // list of users that this user is following
@@ -133,64 +99,12 @@ const [readingGoal, setReadingGoal] = useState<number>(0);
 
   fetchUserData();
 
-  }, []);
-
-
-  // // helper method to get the user's list of read books 
-  // const fetchReadBooksList = async (username:string):Promise<BookItem[] | undefined> => {
-  //   try {
-  //     const response = await axios.get<BookItem[]>(`/shelf/${username}/read-books`);
-  //     return response.data;
-  //   }catch (error) {
-  //     console.log(`Error: Failed to fetch read books list for user ${username}`);
-  //     // show error- oops were having trouble getting your read books list
-
-
-  //   }
-  // }
-    
-//     // list of this users' followers
-//     axios.get(`/${user}/followers`)
-//     .then((response) => {
-//       setFollowers(response.data)}
-//     ).catch((error) => console.log(error))
-
-//     // list of people this user is following
-//     axios.get(`/${user}/following`)
-//     .then((response) => {
-//       setFollowing(response.data)}
-//     ).catch((error) => console.log(error));
-
-
-// // get the user's reading goal and update graph on page reload
-//       axios.get(`${currentUser.username}/goals`
-//       ).then((response) => {
-//           response.data === -1 ? setGoal(0) : setGoal(response.data);
-//   }).catch((error) => console.log(error));
-
-//   // list of this user's read books
-//   axios.get(`/shelf/${user}/read-books`, {
-//       headers: { "Content-Type": "application/json" }
-//   })
-//   .then((response) => setReadBooksList(response.data))
-//   .catch((error) => {
-//       console.error("❌ Book Fetch Error:", error);
-//       // setError("Error loading book data. Please try again later.");
-//   });
-        
-//   }, []);
-
-  for (var i=0; i < shelvesList.length; i++) {
-    console.log(shelvesList[i].shelf_name)
-  }
-const topFive = shelvesList.find((item) => item.shelf_name === 'top-5')
-  console.log("TOP 5", topFive)
+  }, [user]);
 
 
   const findItem = ((array:User[], username:string)=> array.find((item) => item.username == username));
-const followingUser = findItem(followers, currentUser.username)
+  const isFollowingUser = findItem(followers, currentUser.username);
  
-  const [isFollowing, setIsFollowing] = useState(false);
 
   // Follow another user
   const followSuccessMessage = () => toast(`Success! You are now following ${user}.`, {
@@ -226,7 +140,7 @@ const followingUser = findItem(followers, currentUser.username)
       }},)
     .then(() => {
       followSuccessMessage();
-      setIsFollowing(true);
+      navigate(0); // trigger page reload
     })
     .catch((error) => {
       console.log(error);
@@ -266,19 +180,13 @@ const followingUser = findItem(followers, currentUser.username)
       }},)
     .then(() => {
       unfollowSuccessMessage();
-      setIsFollowing(false);
     })
     .catch((error) => {
       console.log(error);
       unfollowErrorMessage();
   })
-
   };
     
-
-
-
-  let year = new Date().getFullYear();
 
 
 
@@ -300,17 +208,15 @@ const followingUser = findItem(followers, currentUser.username)
             <h2>{user === currentUser.username ? (currentUser.username) : (user)}</h2> 
           </div>
           {/*Display follow/unfollow buttons on other user's profile pages. */}
-          {(!iscurrentUsersProfile && !isFollowing) ? <button className='primary' onClick={handleFollow}>Follow</button> : 
-          (!iscurrentUsersProfile && isFollowing) ?  (<button className='secondary' onClick={handleUnfollow}>Unfollow</button>) : <></>}  
+          {(!iscurrentUsersProfile && !isFollowingUser) ? <button className='primary' onClick={handleFollow}>Follow</button> : 
+          (!iscurrentUsersProfile && isFollowingUser) ?  (<button className='secondary' onClick={handleUnfollow}>Unfollow</button>) : <></>}  
         </div>
-        <div className="reader-goals">
-          {iscurrentUsersProfile ? (<YearlyProgressChart progress={currentUserReadBooksList.length} goal={currentUser.goal}  />) : (<YearlyProgressChart progress={otherUserReadBooksList.length} goal={readingGoal}  />)}
-        </div>
+
         
         <div id='header-stats'>
           
           <div className='stats' onClick={() => setSelected('Profile')}>
-            <h3>{currentUserReadBooksList.length}</h3>
+            <h3>{otherUserReadBooksList.length}</h3>
             <p>Books Read</p>
           </div>
           <div className='stats' onClick={() => setSelected('Profile')}>
@@ -352,9 +258,11 @@ const followingUser = findItem(followers, currentUser.username)
         {title} {selected}:
         {(selected == 'Profile') ?
          <div>
-          {iscurrentUsersProfile ? (<div id="reader-goals">
-             <UserProfile library={shelvesList}/>
-         </div>) : (<></>)}
+          <div id="profile-container">
+            <div id="reader-goals">
+             <UserProfile/>
+            </div>
+          </div>
         </div>
         : (selected == 'Library') ?
         <div>

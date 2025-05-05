@@ -1,0 +1,44 @@
+div.library-shelf {
+    border-style: solid;
+    border-width: thin;
+    margin: 1em;
+    padding: 1em;
+    border-color: var(--main-color);
+    width: 75vw;
+}
+
+div.library-shelf div.shelf-link-container a h4 {
+    font-size: 1em;
+    padding: 0;
+}
+
+ul.shelf-book-list {
+    display: flex;
+    margin: 0.5em 0em;
+}
+
+ul.shelf-book-list li {
+    margin: 1em;
+    padding: 0.5em; 
+    background-color: #2a2a3b;
+    border-radius: 8px;
+}
+
+
+ul.shelf-book-list li a:hover {
+    color:#6c63ff
+}
+
+div.shelf-link-container {
+    border-bottom-style: solid;
+    border-width: thin;
+    border-color: var(--main-color);
+    padding:0.5em;
+    margin: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+div.shelf-link-container a:hover {
+    color:#6c63ff
+}
