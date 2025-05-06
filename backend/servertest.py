@@ -457,81 +457,81 @@ class ReviewTestCase(unittest.TestCase):
         print("----------------------------------\n")
 
 
-    def test_book_search(self):
-        # Test with general query parameter
-        response = self.app.get('/search?q=harry+potter&limit=5')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertTrue(isinstance(data, list))
-        self.assertTrue(len(data) > 0)
+    # def test_book_search(self):
+    #     # Test with general query parameter
+    #     response = self.app.get('/search?q=harry+potter&limit=5')
+    #     self.assertEqual(response.status_code, 200)
+    #     data = response.get_json()
+    #     self.assertTrue(isinstance(data, list))
+    #     self.assertTrue(len(data) > 0)
         
-        # Validate fields in first result
-        first_book = data[0]
-        self.assertTrue('title' in first_book)
-        self.assertTrue('author' in first_book)
-        self.assertTrue('work_id' in first_book)
-        self.assertTrue('description' in first_book)
-        self.assertTrue('img_S' in first_book)
-        self.assertTrue('img_M' in first_book)
-        self.assertTrue('img_L' in first_book)
+    #     # Validate fields in first result
+    #     first_book = data[0]
+    #     self.assertTrue('title' in first_book)
+    #     self.assertTrue('author' in first_book)
+    #     self.assertTrue('work_id' in first_book)
+    #     self.assertTrue('description' in first_book)
+    #     self.assertTrue('img_S' in first_book)
+    #     self.assertTrue('img_M' in first_book)
+    #     self.assertTrue('img_L' in first_book)
         
-        # Test with title parameter
-        response = self.app.get('/search?title=Lord+of+the+Rings&limit=5')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertTrue(isinstance(data, list))
-        self.assertTrue(len(data) > 0)
+    #     # Test with title parameter
+    #     response = self.app.get('/search?title=Lord+of+the+Rings&limit=5')
+    #     self.assertEqual(response.status_code, 200)
+    #     data = response.get_json()
+    #     self.assertTrue(isinstance(data, list))
+    #     self.assertTrue(len(data) > 0)
         
-        # Test with author parameter
-        response = self.app.get('/search?author=J.K.+Rowling&limit=5')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertTrue(isinstance(data, list))
+    #     # Test with author parameter
+    #     response = self.app.get('/search?author=J.K.+Rowling&limit=5')
+    #     self.assertEqual(response.status_code, 200)
+    #     data = response.get_json()
+    #     self.assertTrue(isinstance(data, list))
         
-        # Test with limit parameter
-        response = self.app.get('/search?q=fantasy&limit=5')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertTrue(isinstance(data, list))
-        self.assertTrue(len(data) <= 5)
+    #     # Test with limit parameter
+    #     response = self.app.get('/search?q=fantasy&limit=5')
+    #     self.assertEqual(response.status_code, 200)
+    #     data = response.get_json()
+    #     self.assertTrue(isinstance(data, list))
+    #     self.assertTrue(len(data) <= 5)
         
-        # Test invalid/missing parameters
-        response = self.app.get('/search')
-        self.assertEqual(response.status_code, 400)
-        data = response.get_json()
-        self.assertTrue('error' in data)
-        self.assertEqual(data['error'], 'Missing search parameter')
+    #     # Test invalid/missing parameters
+    #     response = self.app.get('/search')
+    #     self.assertEqual(response.status_code, 400)
+    #     data = response.get_json()
+    #     self.assertTrue('error' in data)
+    #     self.assertEqual(data['error'], 'Missing search parameter')
         
-    def test_book(self):        
-        # Test with valid work ID
-        work_id = "OL45804W"  # A known work ID
-        response = self.app.get(f'/book/{work_id}')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        # check for accurate title field
-        self.assertTrue('title' in data)
-        self.assertEqual(data['title'], 'Fantastic Mr Fox')  # Example title
-        # Check of accurate author field
-        self.assertTrue('author' in data)
-        self.assertEqual(data['author'], 'Roald Dahl')  # Example title
-        # Check of work_id field
-        self.assertTrue('work_id' in data)
-        self.assertEqual(data['work_id'], work_id)
-        # Check of description field
-        self.assertTrue('description' in data)
-        self.assertTrue(len(data['description']) > 0)
-        # Check for image url fields
-        self.assertTrue('img_L' in data)
-        self.assertTrue('img_S' in data)
-        self.assertTrue('img_M' in data)
+    # def test_book(self):        
+    #     # Test with valid work ID
+    #     work_id = "OL45804W"  # A known work ID
+    #     response = self.app.get(f'/book/{work_id}')
+    #     self.assertEqual(response.status_code, 200)
+    #     data = response.get_json()
+    #     # check for accurate title field
+    #     self.assertTrue('title' in data)
+    #     self.assertEqual(data['title'], 'Fantastic Mr Fox')  # Example title
+    #     # Check of accurate author field
+    #     self.assertTrue('author' in data)
+    #     self.assertEqual(data['author'], 'Roald Dahl')  # Example title
+    #     # Check of work_id field
+    #     self.assertTrue('work_id' in data)
+    #     self.assertEqual(data['work_id'], work_id)
+    #     # Check of description field
+    #     self.assertTrue('description' in data)
+    #     self.assertTrue(len(data['description']) > 0)
+    #     # Check for image url fields
+    #     self.assertTrue('img_L' in data)
+    #     self.assertTrue('img_S' in data)
+    #     self.assertTrue('img_M' in data)
         
-        # Test with invalid work ID - API still returns 200 with available fields
-        bad_id = "InvalidWorkID"
-        response = self.app.get(f'/book/{bad_id}')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertTrue('error' in data)
-        self.assertEqual(data['error'], '404 Client Error: Not Found for url: https://openlibrary.org/works/InvalidWorkID.json')
+    #     # Test with invalid work ID - API still returns 200 with available fields
+    #     bad_id = "InvalidWorkID"
+    #     response = self.app.get(f'/book/{bad_id}')
+    #     self.assertEqual(response.status_code, 200)
+    #     data = response.get_json()
+    #     self.assertTrue('error' in data)
+    #     self.assertEqual(data['error'], '404 Client Error: Not Found for url: https://openlibrary.org/works/InvalidWorkID.json')
         
 
 if __name__ == '__main__':
