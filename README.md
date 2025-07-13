@@ -1,3 +1,6 @@
+> 📌 **Note:** This repository is a **mirrored academic project** originally developed as part of a group assignment at Virginia Tech.  
+> All commit history and contributions reflect collaborative work from the original repository: [VT GitLab – cs-5704-social-books](https://code.vt.edu/connorb24/cs-5704-social-books).
+
 # CS 5704 Social Books
 ## Repository details
 This repository contains all the files and data pertaining to the Social Books application.\
